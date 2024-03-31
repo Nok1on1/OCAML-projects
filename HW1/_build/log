@@ -1,0 +1,34 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /home/noklon/.cache/dune/db
+# Workspace root: /home/noklon/OCAMLprj/HW1
+# Auto-detected concurrency: 16
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; installed_env =
+#      map
+#        { "INSIDE_DUNE" : "/home/noklon/OCAMLprj/HW1/_build/default"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; instrument_with = []
+#  }
+$ /home/noklon/.opam/default/bin/ocamlc.opt -config > /tmp/dune_b81876_output
+# Promoting "_build/default/HW1.opam" to "HW1.opam"
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I lib/.HW1.objs/byte -no-alias-deps -opaque -o lib/.HW1.objs/byte/hW1.cmo -c -impl lib/hW1.ml-gen)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.test_HW1.eobjs/byte -no-alias-deps -opaque -o test/.test_HW1.eobjs/byte/dune__exe__Test_HW1.cmi -c -intf test/test_HW1.mli)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o lib/HW1.cma lib/.HW1.objs/byte/hW1.cmo)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I bin/.main.eobjs/byte -I lib/.HW1.objs/byte -no-alias-deps -opaque -o bin/.main.eobjs/byte/dune__exe__Main.cmi -c -intf bin/main.mli)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.test_HW1.eobjs/byte -I test/.test_HW1.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o test/.test_HW1.eobjs/native/dune__exe__Test_HW1.cmx -c -impl test/test_HW1.ml)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I lib/.HW1.objs/byte -I lib/.HW1.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o lib/.HW1.objs/native/hW1.cmx -c -impl lib/hW1.ml-gen)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.HW1.objs/byte -I lib/.HW1.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o lib/HW1.cmxa lib/.HW1.objs/native/hW1.cmx)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I lib -o lib/HW1.cmxs lib/HW1.cmxa)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o test/test_HW1.exe test/.test_HW1.eobjs/native/dune__exe__Test_HW1.cmx)
+$ (cd _build/default && /home/noklon/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/HW1.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
