@@ -1,6 +1,0 @@
-# dune init proj 99P
-# OCAMLPARAM: unset
-# Shared cache: disabled
-# Shared cache location: /home/noklon/.cache/dune/db
-# Workspace root: /home/noklon/OCAMLprj/99P
-# Auto-detected concurrency: 16
