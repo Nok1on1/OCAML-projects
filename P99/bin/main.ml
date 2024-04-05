@@ -30,3 +30,32 @@ let flatten lst =
     | One h::t -> flatten1 t (lst2 @ [h])    
     | Many h::t -> flatten1 t (flatten1 h lst2)
   in flatten1 lst [];;
+
+ type 'a rle =
+  | One of 'a
+  | Many of int * 'a;;
+  let runlength lst = 
+    let rec runlength1 lst lst1 var count =
+      match lst with
+      | [] -> lst1 @ (if count = 0 then [One var] else [Many ( (count+1),var)])
+      | h::t -> if h = var then runlength1 t lst1 var (count+1)
+      else  runlength1 t (if count = 0 then lst1@ [One var] else [Many ( (count+1),var)]) h 0
+    in
+    let first = function
+    | [] -> raise Not_found
+    | h::_t -> h
+  in 
+    runlength1 lst [] (first lst) (-1);;
+
+  let replicate lst n =
+    let rec duplicate var x =
+      match x with
+      | 1 -> var
+      | _ -> var ^ duplicate var (x-1) 
+      in
+    let rec dupN lst lst1 n = 
+      match lst with
+      | [] -> lst1
+      | h::t -> dupN t (lst1 @ [duplicate h n]) n 
+    in
+    dupN lst [] n;;
