@@ -59,3 +59,16 @@ let flatten lst =
       | h::t -> dupN t (lst1 @ [duplicate h n]) n 
     in
     dupN lst [] n;;
+
+  let rotate lst n=
+  let rec size n = function
+  | [] -> n
+  | _h::t -> size (n+1) t 
+  in 
+    let rec rotate1  lst n =
+    match lst, n with
+    | [], _ -> []
+    | _ , 0 -> lst
+    | h::t, _ -> rotate1 (t @ [h]) (n-1)
+  in
+  rotate1 lst ((size 0 lst) - abs(n));;
