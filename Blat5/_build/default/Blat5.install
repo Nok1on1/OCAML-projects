@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/Blat5/META"
+  "_build/install/default/lib/Blat5/dune-package"
+  "_build/install/default/lib/Blat5/opam"
+]
+bin: [
+  "_build/install/default/bin/Blat5"
+]
