@@ -134,4 +134,3 @@ let rec interleave lst1 lst2 lst3 oglst =
       | [] -> []
       | _ -> if compare (allpossiblen lst n) != [] then compare (allpossiblen lst n) else aux lst (n-1)
     in aux lst ((size 0 lst)-1);;
-    
