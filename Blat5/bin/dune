@@ -1,4 +1,0 @@
-(executable
- (public_name Blat5)
- (name main)
- (libraries Blat5))

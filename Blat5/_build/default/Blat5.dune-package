@@ -1,4 +1,0 @@
-(lang dune 3.14)
-(name Blat5)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (Blat5)))
