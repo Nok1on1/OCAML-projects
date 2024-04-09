@@ -104,10 +104,19 @@ let rec interleave lst1 lst2 lst3 oglst =
        | [] -> [] 
        | h::t -> h :: cropleft t (n-1);;
 
+  let rec indexof x lst =
+    let rec aux x lst count =
+    match lst with
+    | [] -> raise Not_found
+    | h::t -> if h = x then count else aux x t (count+1)
+    in
+        aux x lst 0;;
 
-  let rec cropright lst n = match lst with
-  | [] -> []
-  | _h::t -> if n = 0 then lst else cropright t (n-1);;
+
+    let rec cropright lst n = 
+      match lst with
+        | [] -> []
+        | _h::t -> if n = 0 then lst else cropright t (n-1);;
 
   let allpossiblen lst n =
     let rec aux (lst : 'a list) lst1 (lst2 : 'a list list) n =
@@ -117,10 +126,11 @@ let rec interleave lst1 lst2 lst3 oglst =
   in aux (cropright lst n) (cropleft lst n) ([cropleft lst n]) n;;
 
   let compare lst = 
+    let original = lst in
     let rec aux lst n =
       match lst with
       | [] -> []
-      | h::t -> if h = n then h else aux t n 
+      | h::t -> if (h = n) && (abs(size 0 original - size 0 t - 1 - (indexof h original)) >= size 0 h) then h else aux t n 
     in
     let rec aux1 lst =
       match lst with
@@ -133,4 +143,4 @@ let rec interleave lst1 lst2 lst3 oglst =
       match lst with
       | [] -> []
       | _ -> if compare (allpossiblen lst n) != [] then compare (allpossiblen lst n) else aux lst (n-1)
-    in aux lst ((size 0 lst)-1);;
+    in aux lst ((size 0 lst)/2);;
