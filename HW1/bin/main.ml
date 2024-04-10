@@ -93,9 +93,9 @@ let rec interleave lst1 lst2 lst3 oglst =
 
 
 
-(*Longest twins But with overlap*)
+(*Longest twins*)
   let rec size n = function
-  | [] ->  (n-1)
+  | [] ->  n
   | _::t -> size (n+1) t;;
 
   let rec cropleft lst n = 
@@ -116,10 +116,10 @@ let rec interleave lst1 lst2 lst3 oglst =
     let rec cropright lst n = 
       match lst with
         | [] -> []
-        | _h::t -> if n = 0 then lst else cropright t (n-1);;
+        | _::t -> if n = 0 then lst else cropright t (n-1);;
 
   let allpossiblen lst n =
-    let rec aux (lst : 'a list) lst1 (lst2 : 'a list list) n =
+    let rec aux (lst : 'a list) (lst1: 'a list) (lst2 : 'a list list) (n : int) =
     match lst with
     | [] -> lst2
     | h::t -> aux t (cropright lst1 1 @ [h]) ([cropright lst1 1 @ [h]] @ lst2) n
