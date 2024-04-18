@@ -1,4 +1,3 @@
-
 type tree =
   | Empty
   | Node of int * tree * tree;; (*value, left child, right child*)
