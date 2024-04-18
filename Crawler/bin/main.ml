@@ -46,7 +46,6 @@ type tree =
     | Remove::_xs, _ -> Empty
     | Replace::_xs, _ -> element stack
     |_, _ -> raise Not_found;;
-
   let rec push (tree : tree) (cmdslist) =
     match cmdslist, tree with
     | Left::xs, Node(_,left,_) -> push left xs

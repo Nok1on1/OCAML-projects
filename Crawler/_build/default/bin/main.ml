@@ -67,39 +67,3 @@ type tree =
 
   let crawl (cmdslist : cmdslist) (tree : tree) = 
     usecmds (separatecmds cmdslist) [] tree [];;
-
-
-(*let crawl (cmdslist : cmdslist) (crawler : crawler) = 
-  let rec aux cmdslist crawler = match cmdslist with
-  | Left::xs -> crawl xs (movecleft crawler)
-  | Right::xs -> crawl xs (movecright crawler)
-  | Top::xs -> crawl xs (returntop crawler)
-  | New::xs -> crawl xs (newnode)
-in aux cmdslist crawler;;*)
-
-
-(*let movecleft (crawler : crawler) =
-  match (element crawler) with
-  | Empty -> crawler  
-  | Node (_value, left, _right) -> left :: crawler;;
-
-
-  let movecright (crawler : crawler) =
-    match (element crawler) with
-    | Empty -> crawler
-    | Node (_value, _left, right) -> right :: crawler;;
-
-let returntop (crawler : crawler) =
-  match crawler with
-  | [] -> crawler
-  | _::xs -> xs;;
-
-let newnode (crawler : crawler) =
-  match crawler with
-  | [] -> crawler
-  | _::xs -> Node(0, Empty, Empty)::xs;;
-
-let remove (crawler : crawler) = 
-  match crawler with
-  | [] -> raise Not_found
-  | _x::xs -> (Empty) :: xs;;*)
