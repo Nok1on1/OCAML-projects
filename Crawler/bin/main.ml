@@ -1,43 +1,55 @@
 type tree =
-| Leaf of int 
+| Empty
 | Node of int * tree * tree;; (*value, left child, right child*)
 
-type command = Left | Right | Top | Push
+type command = Left | Right | Top | New | Remove | Push | Replace;; 
 
-type path =  tree list;;
+type crawler =  tree list;;
+type stack = tree list;;
+type cmdslist = command list;;
 
-let element (path : path)  =
-match path with
-| [] -> Leaf 0
+let element (crawler : crawler)  =
+match crawler with
+| [] -> Empty
 | x::_xs -> x;;
 
-let movecleft (path : path) =
-  match (element path) with
-  | Leaf x -> path  
-  | Node (_value, left, _right) -> left :: path;;
+let movecleft (crawler : crawler) =
+  match (element crawler) with
+  | Empty -> crawler  
+  | Node (_value, left, _right) -> left :: crawler;;
 
 
-  let movecright (path : path) =
-    match (element path) with
-    | Leaf x -> path
-    | Node (_value, _left, right) -> right :: path;;
+  let movecright (crawler : crawler) =
+    match (element crawler) with
+    | Empty -> crawler
+    | Node (_value, _left, right) -> right :: crawler;;
 
-let returntop (path : path) =
-  match path with
-  | [] -> raise Not_found
+let returntop (crawler : crawler) =
+  match crawler with
+  | [] -> crawler
   | _::xs -> xs;;
 
-let replace  (path : path) (node : tree) =
-  match path with
-  | [] -> raise Not_found
-  | _::xs -> node::xs;;
+let newnode (crawler : crawler) =
+  match crawler with
+  | [] -> crawler
+  | _::xs -> Node(0, Empty, Empty)::xs;;
 
-let remove (path : path) = 
-  match path with
+let remove (crawler : crawler) = 
+  match crawler with
   | [] -> raise Not_found
-  | _x::xs -> (Leaf 0) :: xs;;
+  | _x::xs -> (Empty) :: xs;;
 
-let push (path : path) (node : tree) =
-  match path with
-  | [] -> raise Not_found
-  | x::xs -> 
+let rec down (tree : tree) (cmdslist : cmdslist) = 
+  match cmdslist, tree with
+  | Left::xs , Node(value, left, right) -> Node(value, down left xs, right)
+  | Right::xs, Node(value, left, right) -> Node(value, left, down right xs)
+  | Top::xs, Node(value, left, right) -> Node(value, left, right)
+  | ;;
+
+let crawl (cmdslist : cmdslist) (crawler : crawler) = 
+  let rec aux cmdslist crawler = match cmdslist with
+  | Left::xs -> crawl xs (movecleft crawler)
+  | Right::xs -> crawl xs (movecright crawler)
+  | Top::xs -> crawl xs (returntop crawler)
+  | New::xs -> crawl xs (newnode)
+in aux cmdslist crawler;;
