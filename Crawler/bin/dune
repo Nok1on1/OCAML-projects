@@ -1,0 +1,4 @@
+(executable
+ (public_name Crawler)
+ (name main)
+ (libraries Crawler))

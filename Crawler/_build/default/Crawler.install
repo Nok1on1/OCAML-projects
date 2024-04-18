@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/Crawler/META"
+  "_build/install/default/lib/Crawler/dune-package"
+  "_build/install/default/lib/Crawler/opam"
+]
+bin: [
+  "_build/install/default/bin/Crawler"
+]
