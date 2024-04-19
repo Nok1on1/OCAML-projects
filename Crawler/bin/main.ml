@@ -4,25 +4,26 @@ type tree =
   
   type command = Left | Right | Top | New | Remove | Push | Replace;; 
   
-  type stack = tree list;;
   type cmdslist = command list;;
   
   let element lst  =
   match lst with
   | [] -> Empty
   | x::_xs -> x;;
+
   let rec lastelement (lst : command list)= 
   match lst with
   | [] -> raise Not_found
   | [x] -> x
   | _::xs -> lastelement xs;;
+
   let tail = function
   | [] -> []
   | _::xs -> xs;;
 
   let rec crop = function
   | [] -> []
-  | [x] -> []
+  | [_] -> []
   | x::xs -> x::crop xs;;
 
   let separatecmds cmdslist = 
@@ -46,6 +47,7 @@ type tree =
     | Remove::_xs, _ -> Empty
     | Replace::_xs, _ -> element stack
     |_, _ -> raise Not_found;;
+
   let rec push (tree : tree) (cmdslist) =
     match cmdslist, tree with
     | Left::xs, Node(_,left,_) -> push left xs
@@ -65,4 +67,4 @@ type tree =
     else  usecmds xs (path@crop lst) (down tree (path@x) stack) stack;;
 
   let crawl (cmdslist : cmdslist) (tree : tree) = 
-    usecmds (separatecmds cmdslist) [] tree [];;
+    usecmds (separatecmds cmdslist) [] tree [];;  
