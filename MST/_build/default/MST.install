@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/MST/META"
+  "_build/install/default/lib/MST/dune-package"
+  "_build/install/default/lib/MST/opam"
+]
+bin: [
+  "_build/install/default/bin/MST"
+]
