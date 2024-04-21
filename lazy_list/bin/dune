@@ -1,0 +1,4 @@
+(executable
+ (public_name lazy_list)
+ (name main)
+ (libraries lazy_list))
