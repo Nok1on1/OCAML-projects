@@ -1,0 +1,4 @@
+(executable
+ (public_name Modules_Matrix)
+ (name main)
+ (libraries Modules_Matrix))

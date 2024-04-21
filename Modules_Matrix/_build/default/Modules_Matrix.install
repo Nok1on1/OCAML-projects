@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/Modules_Matrix/META"
+  "_build/install/default/lib/Modules_Matrix/dune-package"
+  "_build/install/default/lib/Modules_Matrix/opam"
+]
+bin: [
+  "_build/install/default/bin/Modules_Matrix"
+]
