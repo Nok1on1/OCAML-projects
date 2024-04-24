@@ -30,5 +30,3 @@ let rec find p t =
   let optiontoltree (t : 'a  ltree option) = match t with
   | Some x -> x
   | None -> raise Not_found;;
-
-  top 4 (optiontoltree (find (fun y -> y > 9) (layer_tree 1)));;
