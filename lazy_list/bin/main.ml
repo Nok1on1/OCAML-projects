@@ -9,5 +9,5 @@ let rec ltake n = function
 | _ -> [];;
 
 let rec lfilter funct = function
-  | Cons(x, xf) when funct x -> Cons(x, fun () -> lfilter funct (xf ()))
-  | Cons(_, xf) -> lfilter funct (xf ())
+  | Cons(x, xf) when (funct x) -> Cons(x, fun () -> lfilter funct (xf ()))
+  | Cons(_, xf) -> lfilter funct (xf ());;

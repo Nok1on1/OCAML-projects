@@ -93,54 +93,52 @@ let rec interleave lst1 lst2 lst3 oglst =
 
 
 
-(*Longest twins*)
-  let rec size n = function
-  | [] ->  n
-  | _::t -> size (n+1) t;;
+let rec size = function
+  | [] -> 0
+  | _::t -> 1 + size t
 
-  let rec cropleft lst n = 
-    if n = 0 then [] else
-       match lst with 
-       | [] -> [] 
-       | h::t -> h :: cropleft t (n-1);;
+let rec cropleft lst n = 
+  if n = 0 then [] else
+    match lst with 
+    | [] -> [] 
+    | h::t -> h :: cropleft t (n-1)
 
-  let rec indexof x lst =
-    let rec aux x lst count =
+let rec indexof x lst =
+  let rec aux x lst count =
     match lst with
     | [] -> raise Not_found
     | h::t -> if h = x then count else aux x t (count+1)
-    in
-        aux x lst 0;;
+  in
+  aux x lst 0
 
+let rec cropright lst n = 
+  match lst with
+  | [] -> []
+  | _::t -> if n = 0 then lst else cropright t (n-1)
 
-    let rec cropright lst n = 
-      match lst with
-        | [] -> []
-        | _::t -> if n = 0 then lst else cropright t (n-1);;
-
-  let allpossiblen lst n =
-    let rec aux (lst : 'a list) (lst1: 'a list) (lst2 : 'a list list) (n : int) =
+let allpossiblen lst n =
+  let rec aux lst lst1 lst2 =
     match lst with
     | [] -> lst2
-    | h::t -> aux t (cropright lst1 1 @ [h]) ([cropright lst1 1 @ [h]] @ lst2) n
-  in aux (cropright lst n) (cropleft lst n) ([cropleft lst n]) n;;
+    | h::t -> aux t (cropright lst1 1 @ [h]) ([cropright lst1 1 @ [h]] @ lst2)
+  in aux (cropright lst n) (cropleft lst n) [cropleft lst n]
 
-  let compare lst = 
-    let original = lst in
-    let rec aux lst n =
-      match lst with
-      | [] -> []
-      | h::t -> if (h = n) && (abs(size 0 original - size 0 t - 1 - (indexof h original)) >= size 0 h) then h else aux t n 
-    in
-    let rec aux1 lst =
-      match lst with
-      | [] -> []
-      | h::t -> if aux t h != [] then aux t h else aux1 t
-    in aux1 lst;;
+let compare lst = 
+  let original = lst in
+  let rec aux lst n =
+    match lst with
+    | [] -> []
+    | h::t -> if h = n && abs(size original - size t - 1 - indexof h original) >= size h then h else aux t n 
+  in
+  let rec aux1 lst =
+    match lst with
+    | [] -> []
+    | h::t -> if aux t h != [] then aux t h else aux1 t
+  in aux1 lst
 
-  let longtwins lst = 
-    let rec aux lst n =
-      match lst with
-      | [] -> []
-      | _ -> if compare (allpossiblen lst n) != [] then compare (allpossiblen lst n) else aux lst (n-1)
-    in aux lst ((size 0 lst)/2);;
+let longtwins lst = 
+  let rec aux lst n =
+    match lst with
+    | [] -> []
+    | _ -> if compare (allpossiblen lst n) != [] then compare (allpossiblen lst n) else aux lst (n-1)
+  in aux lst (size lst / 2)

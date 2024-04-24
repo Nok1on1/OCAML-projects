@@ -2,7 +2,7 @@ type tree =
   | Empty
   | Node of int * tree * tree;; (*value, left child, right child*)
   
-  type command = Left | Right | Top | New | Remove | Push | Replace;; 
+  type command = Left | Right | Top | New of int | Remove | Push | Replace;; 
   
   type cmdslist = command list;;
   
@@ -30,9 +30,16 @@ type tree =
   let rec aux cmdslist lst1 lst2 =
     match cmdslist with
     | [] -> lst2
-    | x::xs -> if x = Top then aux xs [] (if lst1 = [] then lst2 @ [[x]] else lst2 @ [lst1] @ [[x]]) else
-       if (x = New || x = Remove || x = Replace || x = Push) then aux xs [] (lst2 @ [(lst1@[x])]) else aux xs (lst1@[x]) lst2
-  in aux cmdslist [] [];;
+    | x::xs -> match x with
+    | Top -> aux xs [] (if lst1 = [] then lst2 @ [[x]] else lst2 @ [lst1] @ [[x]])
+    | New _ | Remove | Replace | Push -> aux xs [] (lst2 @ [(lst1@[x])])
+    | _ -> aux xs (lst1@[x]) lst2 in aux cmdslist [] [];;
+      
+      
+      
+      (*if x = Top then aux xs [] (if lst1 = [] then lst2 @ [[x]] else lst2 @ [lst1] @ [[x]]) else
+       if (x = New  || x = Remove || x = Replace || x = Push) then aux xs [] (lst2 @ [(lst1@[x])]) else aux xs (lst1@[x]) lst2
+  in aux cmdslist [] [];;*)
 
   let rec ispath = function
   | [] -> true
@@ -43,7 +50,7 @@ type tree =
     | [] , _ -> Empty
     | Left::xs , Node(value, left, right) -> Node(value, (down left xs stack), right)
     | Right::xs, Node(value, left, right) -> Node(value, left, down right xs stack)
-    | New::_xs, Node(_, _, _) -> Node(0, Empty, Empty)
+    | New n::_xs, Node(_, _, _) -> Node(n, Empty, Empty)
     | Remove::_xs, _ -> Empty
     | Replace::_xs, _ -> element stack
     |_, _ -> raise Not_found;;
@@ -68,3 +75,6 @@ type tree =
 
   let crawl (cmdslist : cmdslist) (tree : tree) = 
     usecmds (separatecmds cmdslist) [] tree [];;  
+
+
+    

@@ -10,11 +10,13 @@ type tree =
   match lst with
   | [] -> Empty
   | x::_xs -> x;;
+
   let rec lastelement (lst : command list)= 
   match lst with
   | [] -> raise Not_found
   | [x] -> x
   | _::xs -> lastelement xs;;
+
   let tail = function
   | [] -> []
   | _::xs -> xs;;
@@ -45,6 +47,7 @@ type tree =
     | Remove::_xs, _ -> Empty
     | Replace::_xs, _ -> element stack
     |_, _ -> raise Not_found;;
+
   let rec push (tree : tree) (cmdslist) =
     match cmdslist, tree with
     | Left::xs, Node(_,left,_) -> push left xs
@@ -64,29 +67,4 @@ type tree =
     else  usecmds xs (path@crop lst) (down tree (path@x) stack) stack;;
 
   let crawl (cmdslist : cmdslist) (tree : tree) = 
-    usecmds (separatecmds cmdslist) [] tree [];;
-
-let () =
-  (* Define some test trees *)
-  let tree1 = Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty)) in
-  let tree2 = Node(4, Node(5, Empty, Empty), Node(6, Empty, Empty)) in
-  
-  (* Test cases *)
-  let cmdslist1 = [Left; Top; New] in
-  let cmdslist2 = [Right; Top; Remove] in
-  let cmdslist3 = [Right; Push; Left; Right; Replace] in
-  
-  (* Test crawl function with different trees and commands *)
-  let _result1 = crawl cmdslist1 tree1 in
-  let _result2 = crawl cmdslist2 tree1 in
-  let _result3 = crawl cmdslist3 tree2 in
-  
-  (* Print results *)
-  print_endline "Result 1:";
-  (* Print result1 *)
-  
-  print_endline "Result 2:";
-  (* Print result2 *)
-  
-  print_endline "Result 3:";
-  (* Print result3 *)
+    usecmds (separatecmds cmdslist) [] tree [];;  
