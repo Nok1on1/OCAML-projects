@@ -1,0 +1,4 @@
+(executable
+ (public_name geometrymodule)
+ (name main)
+ (libraries geometrymodule))
