@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/binarytree/META"
+  "_build/install/default/lib/binarytree/dune-package"
+  "_build/install/default/lib/binarytree/opam"
+]
+bin: [
+  "_build/install/default/bin/binarytree"
+]
