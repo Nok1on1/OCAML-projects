@@ -43,15 +43,12 @@ let rec map_over_custom_llist f (lst : 'a custom_llist) =
   | ConsC (x, lst) -> (fun () -> ConsC ((f x), map_over_custom_llist f lst));;
 
 
-let rec map_over_ocaml_llist f (lst : 'a ocaml_llist) =
-    match lst with
-    |  -> pattern
-
-
-
-
-
-
+  let rec map_over_ocaml_llist f (lst : 'a ocaml_llist) : 'b ocaml_llist = 
+    lazy (
+      match Lazy.force lst with
+      | NilO -> NilO
+      | ConsO (x, xs) -> ConsO (f x, map_over_ocaml_llist f xs)
+    )
 
 
 
