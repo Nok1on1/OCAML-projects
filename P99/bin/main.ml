@@ -127,3 +127,35 @@ let rec bestsuit (lst : (int * (int*int)) list) (best, (og, nog)) =
 let smallest (sn : string): string =
   match bestsuit (allpossible sn) (List.hd (allpossible sn)) with
   | (num, (og, nog)) -> string_of_int num ^ " " ^ string_of_int og ^ " " ^ string_of_int nog
+
+
+(*weight for weight*)
+let cut str = String.split_on_char ' ' str;;
+
+
+let weight str = 
+  let rec aux = function
+  | [] -> 0
+  | x::xs -> (int_of_char x)-48+ (aux xs)
+in aux (String.to_seq str |> List.of_seq) ;;
+
+let rec tuples = function
+| [] -> []
+| x::xs -> (x, weight x)::(tuples xs);;
+
+let alphabetically a b =
+let rec aux a b = match a , b with
+| [], [] -> 0
+| x::xs, y::ys -> if x > y then 1 else if x < y then -1 else aux xs ys 
+| [], _ -> -1
+| _ , [] -> 1
+in aux (String.to_seq a |> List.of_seq) (String.to_seq b |> List.of_seq);;
+
+let order tuplelst = List.sort (fun (x, weight) (y, weight1) -> if weight-weight1 = 0 then alphabetically x y else weight-weight1) tuplelst;;
+
+let rec buildstr = function
+| [] -> ""
+| [(x, _)] -> x
+| (x, _)::xs -> x^" "^buildstr xs;;
+
+let orderWeight (s: string): string = buildstr (order(tuples (cut s)));;
