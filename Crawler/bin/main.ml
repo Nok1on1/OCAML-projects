@@ -35,12 +35,6 @@ type tree =
     | New _ | Remove | Replace | Push -> aux xs [] (lst2 @ [(lst1@[x])])
     | _ -> aux xs (lst1@[x]) lst2 in aux cmdslist [] [];;
       
-      
-      
-      (*if x = Top then aux xs [] (if lst1 = [] then lst2 @ [[x]] else lst2 @ [lst1] @ [[x]]) else
-       if (x = New  || x = Remove || x = Replace || x = Push) then aux xs [] (lst2 @ [(lst1@[x])]) else aux xs (lst1@[x]) lst2
-  in aux cmdslist [] [];;*)
-
   let rec ispath = function
   | [] -> true
   | x::xs -> if x != Left && x != Right then false else ispath xs;; 
@@ -75,6 +69,5 @@ type tree =
 
   let crawl (cmdslist : cmdslist) (tree : tree) = 
     usecmds (separatecmds cmdslist) [] tree [];;  
-
 
     

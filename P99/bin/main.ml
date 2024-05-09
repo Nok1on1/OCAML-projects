@@ -159,3 +159,62 @@ let rec buildstr = function
 | (x, _)::xs -> x^" "^buildstr xs;;
 
 let orderWeight (s: string): string = buildstr (order(tuples (cut s)));;
+
+
+(*first non repeating letter*)
+let rec removeall n = function
+| [] -> []
+| x::xs -> if Char.uppercase_ascii x = n || Char.lowercase_ascii x = n then removeall n xs else x::removeall n xs;;
+
+
+let first_non_repeating_letter s = if s = "" then None else
+  let oglst = (s |> String.to_seq |> List.of_seq) in
+let rec aux lst trimlst (n : char) = match lst with
+| [] -> Some n
+| x::xs -> if Char.uppercase_ascii x = n || Char.lowercase_ascii x = n then (if removeall n trimlst = [] then None else aux (List.tl (removeall n trimlst)) (removeall n trimlst) (List.hd (removeall n trimlst))) else aux xs trimlst n
+in aux (List.tl oglst) (List.tl oglst) (List.hd oglst);;
+
+
+(*snail*)
+
+let array2d = [[1;2;3];
+               [4;5;6];
+               [7;8;9]];;
+
+type currdir = L | R | T | B;;
+let nextdir (dir : currdir) = 
+  match dir with
+  | R -> B
+  | B -> L
+  | L -> T
+  | T -> R ;;
+
+let get (x,y) array2d = List.nth (List.nth array2d x) y;;
+
+let generate barrier =
+let rec aux array dir (x,y) barrier = if List.length array = (barrier+1)*(barrier+1) then array else match dir with
+| R -> if List.mem (x,y) array 
+       then aux (array) (nextdir dir) (x+1, y-1) barrier 
+       else if y = barrier
+       then aux ((x,y)::array) (nextdir dir) (x+1, y) barrier
+       else aux ((x,y)::array) (dir) (x, y+1) barrier
+| B -> if List.mem (x,y) array 
+       then aux array (nextdir dir) (x-1, y-1) barrier 
+       else if x = barrier
+       then aux ((x,y)::array) (nextdir dir) (x, y-1) barrier
+       else aux ((x,y)::array) (dir) (x+1, y) barrier
+| L -> if  List.mem (x,y) array
+       then aux array (nextdir dir) (x-1, y+1) barrier
+       else if y = 0
+       then aux ((x,y)::array) (nextdir dir) (x-1, y) barrier
+       else  aux ((x,y)::array) (dir) (x, y-1) barrier
+| T -> if  List.mem (x,y) array
+       then aux array (nextdir dir) (x+1, y+1) barrier
+       else  aux ((x,y)::array) (dir) (x-1, y) barrier
+      in aux [] R (0,0) (barrier);;
+
+let rec translate lst array2d = match lst with
+| [] -> []
+| x::xs -> (get x array2d) :: (translate xs array2d)
+
+let snail xs = if xs = [[]] then [] else List.rev (translate (generate (List.length xs-1)) xs);;
