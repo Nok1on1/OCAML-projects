@@ -218,3 +218,19 @@ let rec translate lst array2d = match lst with
 | x::xs -> (get x array2d) :: (translate xs array2d)
 
 let snail xs = if xs = [[]] then [] else List.rev (translate (generate (List.length xs-1)) xs);;
+
+
+(*power set*)
+
+let to_power_set set =
+  if set = [] then [[]]
+  else
+    let set = set @ [-1] in
+      let rec aux realset elem oldset newset =
+        if realset = [] then newset
+        else match oldset with
+             | [] -> aux (List.tl realset) (List.hd realset) newset newset
+             | x :: xs -> aux realset elem xs ((elem::x)::newset)
+      in
+      aux (List.tl (List.tl set)) (List.hd (List.tl set)) [[]; [(List.hd set)]] [[]; [(List.hd set)]]
+;;
