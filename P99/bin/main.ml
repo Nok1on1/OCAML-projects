@@ -234,3 +234,19 @@ let to_power_set set =
       in
       aux (List.tl (List.tl set)) (List.hd (List.tl set)) [[]; [(List.hd set)]] [[]; [(List.hd set)]]
 ;;
+
+(*lazy list*)
+type 'a llist = Cons of 'a * (unit -> 'a llist);;
+
+let rec inat (x : int)  : int llist = Cons (x, fun () -> inat (x+1));;
+
+let lfib () = let rec aux first second = Cons ((first+second), fun () -> aux (second) (first+second)) in Cons(0, fun () -> Cons(1, (fun () -> (aux 0 1))));;
+
+let rec ltake (n : int) (llist : 'a llist) : 'a list = if n = 0 then [] else match llist with
+| Cons(x, func) -> x:: (ltake (n-1) (func ()));;
+
+
+let womp x = (x mod 2 = 1);;
+
+let rec lfilter (func) (llist : 'a llist) : 'a llist = match llist with
+| Cons(x, funct) -> if func x then Cons(x, fun () -> lfilter func (funct ())) else lfilter func (funct ());;
