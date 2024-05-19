@@ -232,8 +232,7 @@ let to_power_set set =
              | [] -> aux (List.tl realset) (List.hd realset) newset newset
              | x :: xs -> aux realset elem xs ((elem::x)::newset)
       in
-      aux (List.tl (List.tl set)) (List.hd (List.tl set)) [[]; [(List.hd set)]] [[]; [(List.hd set)]]
-;;
+      aux (List.tl (List.tl set)) (List.hd (List.tl set)) [[]; [(List.hd set)]] [[]; [(List.hd set)]];;
 
 (*lazy list*)
 type 'a llist = Cons of 'a * (unit -> 'a llist);;
@@ -250,3 +249,29 @@ let womp x = (x mod 2 = 1);;
 
 let rec lfilter (func) (llist : 'a llist) : 'a llist = match llist with
 | Cons(x, funct) -> if func x then Cons(x, fun () -> lfilter func (funct ())) else lfilter func (funct ());;
+
+
+
+(*tree*)
+
+type 'a tree = Node of 'a * 'a tree list
+
+let rec maketree lst exclude = match lst with
+| [] -> []
+| x::xs -> if List.mem x exclude then maketree xs exclude else (Node (x, [])):: maketree xs exclude;;
+
+let rec maptr (f) (tr : 'a tree list) = match tr with
+| [] -> []
+| x::xs -> (f x) :: (maptr f xs);;
+
+let rec mapv (f) (tr : 'a tree list) = match tr with
+| [] -> []
+| x::xs -> (f x) @ (mapv f xs);;
+
+let rec vlst tree = match tree with
+| Node(x, tr) -> x::(mapv (vlst) tr);;
+
+let update f tree =
+let rec aux f exclude tree = match tree with
+| Node (x, tr) -> if tr = [] then Node (x, maketree (f x) exclude) else Node (x , maptr (aux f exclude) tr) 
+in aux f (vlst tree) tree;;
