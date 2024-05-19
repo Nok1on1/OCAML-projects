@@ -1,8 +1,19 @@
-let isuppercase (n : char) = if ((64 < int_of_char n) && (int_of_char n < 91)) then true else false ;;
+let rec revtuples lst = List.fold_left (fun (x) (y,z) -> x@ [(z,y)] ) [] lst;;
 
-let first_non_repeating_letter s = 
-  let oglst = (s |> String.to_seq |> List.of_seq) in
-let rec aux lst (lst2 : char list) (n : char) = match lst with
-| [] ->  if lst2 = [] then None else if List.length lst2 = 1 then (Some (List.hd lst2)) else aux (List.tl lst2) [] (List.hd lst2)
-| x::xs -> if Char.uppercase_ascii x = n || Char.lowercase_ascii x = n then aux xs (lst2) (n) else aux xs (x::lst2) n
-in (if oglst = [] then None else aux (oglst) ([]) (List.hd oglst));;
+let rec oddeven lst = List.fold_left (fun x y -> if List.length lst mod 2 = 1 then (if List.length x mod 2 = 1 then x @ [y] else y::x) else (if List.length x mod 2 = 0 then x @ [y] else y::x) ) [] lst;;
+
+
+type 'a custom_llist = (unit -> 'a custom_cell) and 'a custom_cell = NilC | ConsC of ('a * 'a custom_llist);;
+
+type 'a ocaml_llist = 'a ocaml_cell Lazy.t and 'a ocaml_cell = NilO | ConsO of ('a * 'a ocaml_llist);;
+
+(*Implement a mapping function that maps a function over a lazy list.
+ Implement it both for custom and OCaml lazy list variants.
+ Call them respectively map_over_custom_llist and map_over_ocaml_llist.*)
+
+ let rec map f llist = match llist () with
+ | ConsC (x, y) -> fun () -> ConsC((f x), map f y)
+ | NilC -> fun () -> NilC;;
+
+
+ let rec map f ocamlllist = Lazy.map f ocamlllist;;

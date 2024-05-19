@@ -181,6 +181,12 @@ let array2d = [[1;2;3];
                [4;5;6];
                [7;8;9]];;
 
+let array5d = [[1;2;3;4;5];
+               [1;2;3;4;5];
+               [1;2;3;4;5];
+               [1;2;3;4;5];
+               [1;2;3;4;5]];;
+
 type currdir = L | R | T | B;;
 let nextdir (dir : currdir) = 
   match dir with
