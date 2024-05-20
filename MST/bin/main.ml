@@ -69,6 +69,5 @@ let mst (graph : graph) =
           (addnode currentnodes (skinny (union graph currentnodes)))
   in aux graph [] (first graph);;
 
-
-(*let graph1 : graph = [(1, 2.0, 3); (2, 3.0, 3); (3, 4.0, 5)];;*)
+mst [(1, 2.0, 3); (2, 3.0, 3); (3, 4.0, 5)];;
 (*let graph2 : graph = [(1, 3.,4); (4, 3.,8); (8, 3.,7); (7, 2.,6); (8, 7.0,6); (6, 4.0,5); (5, 1.,3); (2, 2.,3); (1, 5.,2); (1, 7.,3); (5, 1.,4)];;*)
